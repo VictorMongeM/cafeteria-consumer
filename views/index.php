@@ -1,3 +1,13 @@
+<?php
+require_once __DIR__ . '/../controllers/CafeteriaController.php';
+$controller = new CafeteriaController();
+
+$totalVentas = $controller->obtenerTotalVentas();
+
+$listaVentas = $controller->obtenerListaVentas();
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,8 +38,8 @@
                     <div class="card-header">Total de ventas</div>
                     <div class="card-body">
                         <div class="highlight">
-                            <p><strong>Cantidad de ventas:</strong> <span id="total-cantidad"></span></p>
-                            <p><strong>Monto total:</strong> $<span id="total-pesos"></span></p>
+                            <p><strong>Cantidad de ventas:</strong> <?php echo $totalVentas->total_cantidad; ?></p>
+                            <p><strong>Monto total:</strong> <?php echo $totalVentas->total_pesos; ?></p>
                         </div>
                     </div>
                 </div>
@@ -97,7 +107,17 @@
                             </tr>
                         </thead>
                         <tbody table-hover id="lista-ventas">
-                            <!-- Aquí se cargarán las ventas -->
+                            <!-- De la variable $listaVentas generar -->
+                            <?php foreach ($listaVentas->venta as $venta): ?>
+                                <tr>
+                                    <td><?php echo $venta->venta_id; ?></td>
+                                    <td><?php echo $venta->nombre_producto; ?></td>
+                                    <td><?php echo $venta->cantidad_vendida; ?></td>
+                                    <td><?php echo $venta->numero_mesa; ?></td>
+                                    <td><?php echo $venta->empleado; ?></td>
+                                    <td>$<?php echo $venta->total_venta; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -106,6 +126,5 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
 </body>
 </html>

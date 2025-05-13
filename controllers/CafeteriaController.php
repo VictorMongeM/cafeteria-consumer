@@ -1,36 +1,37 @@
 <?php
 require_once __DIR__ . '/../models/CafeteriaModel.php';
 
-class CafeteriaController {
-    private $model;
+class CafeteriaController
+{
+    private $cafeteriaModel;
 
-    public function __construct() {
-        $this->model = new CafeteriaModel();
+    public function __construct(){
+        $this->cafeteriaModel = new CafeteriaModel();
     }
 
-    public function getDatosResumen() {
-        $datos = [
-            'total_ventas' => $this->model->getTotalVentas(),
-            'empleado_mas_ventas' => $this->model->getEmpleadoMasVentas(),
-            'producto_mas_vendido' => $this->model->getProductoMasVendido(),
-            'sucursal_mas_ventas' => $this->model->getSucursalMasVentas(),
-            'lista_ventas' => $this->model->getListaVentas()
-        ];
-
-        return $datos;
+    public function obtenerTotalVentas() {
+        $xml = $this->cafeteriaModel->obtenerTotalVentas();
+        return $xml;
     }
 
-}
+    public function obtenerEmpleadoMasVentas() {
+        $xml = $this->cafeteriaModel->obtenerEmpleadoMasVentas();
+        return $xml;
+    }
 
-// Si se manda un fecth a este archivo inicializar el controlador y retornar datos
-if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['obtener_datos'])){
-    $controller = new CafeteriaController();
-    $datos = $controller->getDatosResumen();
-    header('Content-Type: application/json');
-    echo json_encode($datos);
-} else {
-    http_response_code(405);
-    header('Content-Type: text/plain; charset=utf-8');
-    echo 'Método no permitido';
+    public function obtenerProductoMasVendido(){
+        $xml = $this->cafeteriaModel->obtenerProductoMasVendido();
+        return $xml;
+    }
+
+    public function obtenerSucursalMasVentas(){
+        $xml = $this->cafeteriaModel->obtenerSucursalMasVentas();
+        return $xml;
+    }
+
+    public function obtenerListaVentas() {
+        $xml = $this->cafeteriaModel->obtenerListaVentas();
+        return $xml;
+    }
 }
 ?>
